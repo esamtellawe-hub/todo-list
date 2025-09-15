@@ -6,10 +6,6 @@ import Navbar from "./navbar";
 import Login from "./login";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 function App() {
-  // const user1 = {
-  //   userName: "esam",
-  //   password: 1111,
-  // };
   return (
     <div className="app">
       <div className="login">
