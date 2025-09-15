@@ -15,13 +15,19 @@ const Home = () => {
     setTasks(updated);
     localStorage.setItem("tasks", JSON.stringify(updated));
   };
-  const handledeleteAll = () => {
+
+  const handleDeleteAll = () => {
     setTasks([]);
     localStorage.removeItem("tasks");
   };
+
   return (
     <div className="home p-6 max-w-xl mx-auto">
-      <h3 className="text-2xl font-bold mb-4">Your Tasks</h3>
+      <h3 className="text-2xl font-bold mb-2">Your Tasks</h3>
+
+      <p className="text-sm text-gray-600 mb-4">
+        {tasks.length} task{tasks.length !== 1 ? "s" : ""} total
+      </p>
 
       {tasks.length === 0 ? (
         <p className="text-gray-500">No tasks available.</p>
@@ -41,9 +47,10 @@ const Home = () => {
           </div>
         ))
       )}
+
       <button
-        className="bg-red-500 text-white px-3 py-1 rounded"
-        onClick={handledeleteAll}
+        className="bg-red-500 text-white px-3 py-1 rounded mt-4"
+        onClick={handleDeleteAll}
       >
         Delete All
       </button>
@@ -52,3 +59,4 @@ const Home = () => {
 };
 
 export default Home;
+
