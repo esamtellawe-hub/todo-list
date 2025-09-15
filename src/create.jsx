@@ -1,20 +1,29 @@
 import { useState } from "react";
-import { Form, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const [taskText, setTaskText] = useState("");
   const navigate = useNavigate();
 
-  const handleAdd = () => {
-    if (taskText.trim() === "") return;
+  const handleAdd = (e) => {
+    e.preventDefault();
 
-    const newTask = {
-      text: taskText,
-      id: Date.now(),
-    };
+    const trimmedText = taskText.trim();
+    if (trimmedText === "") return;
 
     const stored = localStorage.getItem("tasks");
     const tasks = stored ? JSON.parse(stored) : [];
+
+    const isDuplicate = tasks.some((task) => task.text === trimmedText);
+    if (isDuplicate) {
+      alert("⚠️These already exist task ");
+      return;
+    }
+
+    const newTask = {
+      text: trimmedText,
+      id: Date.now(),
+    };
 
     localStorage.setItem("tasks", JSON.stringify([newTask, ...tasks]));
     setTaskText("");
@@ -22,9 +31,10 @@ const Create = () => {
   };
 
   return (
-    <form action="">
+    <form onSubmit={handleAdd}>
       <div className="create p-6 max-w-xl mx-auto">
         <h2 className="text-2xl font-bold mb-4">Add a New Task</h2>
+
         <input
           type="text"
           value={taskText}
@@ -33,10 +43,10 @@ const Create = () => {
           required
           className="border p-2 rounded w-full mb-4"
         />
+
         <button
           type="submit"
-          onClick={handleAdd}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
         >
           Add Task
         </button>
